@@ -34,14 +34,14 @@ response.send("Welcome to Chef Marco's Italian Bistro!").end();
 
 app.get('/menu', function (request, response) {
 
-const { price } = request.query;
+const { maxPrice } = request.query;
+const maxPrices = menu.filter(item => item.price <= maxPrice);
 
-if(!price) {
+if(maxPrices.length === 0) {
   return response.json(menu);
 }
 
-   const filteredPrices = menu.filter(item => item.price <= price);
-   response.json(filteredPrices);
+response.json(maxPrices)
 });
 
 app.get('/menu/1', function (request, response) {
@@ -69,11 +69,15 @@ response.send(menu[3])
 });
 
 
-app.get("/reservations", function (request, response) {
+app.use("/reservations", function (request, response) {
 
-response.status(501).json({
-  'error': "Route exists but isn't implemented yet!"
-});
+response.json({
+  "name": "Person's name",
+  "date": "10/22/2025",
+  "time": "2pm"
+}
+);
+
 });
 
 
